@@ -66,11 +66,11 @@ class Database:
         else:
             logger.info("MongoDB: Already Closed")
 
-    async def list_docs(self) -> List[str]:
+    async def list_docs(self) -> List[int]:
         """Lists all document IDs in the collection.
 
         Returns:
-            List[str]: A list of document IDs.
+            List[int]: A list of document IDs.
         """
         pipeline = [{"$project": {"_id": 1}}]
         cursor = self.db.aggregate(pipeline)
