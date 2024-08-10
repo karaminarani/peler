@@ -6,6 +6,7 @@ from hydrogram.types import CallbackQuery, Message
 
 from bot import (
     authorized_users_only,
+    config,
     get_users,
     helper_buttons,
     helper_handlers,
@@ -13,6 +14,11 @@ from bot import (
 )
 
 startup_date = datetime.datetime.now()
+
+
+@Client.on_message(filters.private & filters.user(config.OWNER_ID))
+async def log_handler(_, message: Message) -> None:
+    await message.reply_document("logs.txt", quote=True)
 
 
 @Client.on_message(filters.private & filters.command("users"))
