@@ -111,7 +111,7 @@ async def restart_data_init() -> None:
 async def main() -> None:
     """
     Main function to initialize and run the bot, including database setup, cache initialization,
-    restart handling, and setting up the scheduler.
+    and restart handling.
     """
     await bot.start()
     bot_user_id, bot_username = bot.me.id, bot.me.username
