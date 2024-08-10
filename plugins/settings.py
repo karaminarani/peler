@@ -1,5 +1,3 @@
-import datetime
-
 from hydrogram import Client, errors, filters
 from hydrogram.enums import ChatType
 from hydrogram.helpers import ikb
@@ -22,19 +20,6 @@ from bot import (
 )
 
 
-@Client.on_callback_query(filters.regex(r"\bexpired\b"))
-@authorized_users_only
-async def expired_handler_query(_, query: CallbackQuery) -> None:
-    msg_expired = (
-        "No Expiry Date!"
-        if not config.EXPIRED_DATE
-        else datetime.datetime.strptime(config.EXPIRED_DATE, "%Y/%m/%d").strftime(
-            "%B %d, %Y"
-        )
-    )
-    await query.answer(msg_expired, show_alert=True)
-
-
 @Client.on_callback_query(filters.regex(r"\bcancel\b"))
 @authorized_users_only
 async def cancel_handler_query(client: Client, query: CallbackQuery) -> None:
@@ -43,6 +28,7 @@ async def cancel_handler_query(client: Client, query: CallbackQuery) -> None:
 
 
 @Client.on_callback_query(filters.regex(r"\bsettings\b"))
+@authorized_users_only
 async def settings_handler_query(_, query: CallbackQuery) -> None:
     await query.message.edit_text(
         "<b>Bot Settings:</b>", reply_markup=ikb(helper_buttons.Menu)
@@ -50,6 +36,7 @@ async def settings_handler_query(_, query: CallbackQuery) -> None:
 
 
 @Client.on_callback_query(filters.regex(r"\bclose\b"))
+@authorized_users_only
 async def close_handler_query(_, query: CallbackQuery) -> None:
     try:
         await query.message.reply_to_message.delete()
@@ -62,6 +49,7 @@ async def close_handler_query(_, query: CallbackQuery) -> None:
 @Client.on_callback_query(
     filters.regex(r"menu (generate|start|force|protect|admins|fsubs)")
 )
+@authorized_users_only
 async def menu_handler_query(_, query: CallbackQuery) -> None:
     def format_list_items(item_title: str, list_items: list) -> str:
         formatted_items = (
