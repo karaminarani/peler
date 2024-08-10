@@ -1,4 +1,4 @@
-FROM python:3.11-alpine
+FROM python:3.9-alpine
 
 # Set timezone
 ENV TZ=Asia/Jakarta
