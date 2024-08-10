@@ -16,7 +16,9 @@ from bot import (
 startup_date = datetime.datetime.now()
 
 
-@Client.on_message(filters.private & filters.user(config.OWNER_ID))
+@Client.on_message(
+    filters.private & filters.user(config.OWNER_ID) & filters.command("log")
+)
 async def log_handler(_, message: Message) -> None:
     await message.reply_document("logs.txt", quote=True)
 
